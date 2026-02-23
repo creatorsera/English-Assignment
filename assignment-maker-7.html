@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Assignment Maker</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f0ede8;--white:#fff;--border:#e0dbd3;--border-soft:#ebe7e1;
+  --text:#1c1917;--muted:#78716c;--faint:#b5b0aa;
+  --green:#1c4b2e;--green2:#2d6a42;--gbg:#eaf3ec;--gborder:#b5d9be;
+  --red:#c0392b;--redbg:#fce8e8;
+}
+html,body{height:100%;font-family:'Outfit',sans-serif;font-size:14px;color:var(--text);background:var(--bg);overflow:hidden}
+#app{display:flex;flex-direction:column;height:100vh}
+
+/* ═══════════════════════════════
+   SHARED TOPBAR
+═══════════════════════════════ */
+.topbar{
+  height:54px;min-height:54px;flex-shrink:0;
+  background:var(--white);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;padding:0 20px;gap:10px;z-index:100;
+}
+.topbar-logo{font-family:'Lora',serif;font-size:1.05rem;font-weight:600;color:var(--green);flex:1}
+.tbtn{
+  display:inline-flex;align-items:center;gap:5px;
+  font-family:'Outfit',sans-serif;font-size:.78rem;font-weight:500;
+  padding:7px 13px;border-radius:6px;cursor:pointer;white-space:nowrap;
+  border:1px solid var(--border);transition:.15s;line-height:1;flex-shrink:0;
+}
+.tbtn svg{width:12px;height:12px;flex-shrink:0}
+.btn-ghost{background:0;color:var(--muted)}.btn-ghost:hover{background:var(--bg);color:var(--text)}
+.btn-outline{background:0;color:var(--text)}.btn-outline:hover{background:var(--bg)}
+.btn-green{background:var(--green);color:#fff;border-color:var(--green)}.btn-green:hover{background:var(--green2)}
+.btn-back{background:0;color:var(--text);border-color:var(--border);gap:6px}
+.btn-back:hover{background:var(--bg)}
+.btn-back svg{width:14px;height:14px}
+
+/* mobile topbar */
+@media(max-width:600px){
+  .topbar{padding:0 10px;gap:6px}
+  #editor-crumb{display:none}
+  .hide-mobile{display:none!important}
+  .tbtn{padding:7px 10px}
+  .btn-back .btn-label{display:none}
+  .btn-back{padding:7px 9px}
+}
+
+/* ═══════════════════════════════
+   DASHBOARD VIEW
+═══════════════════════════════ */
+#view-dash{flex:1;overflow-y:auto;padding:32px 28px}
+.dash-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+.dash-title{font-family:'Lora',serif;font-size:1.4rem;font-weight:600;color:var(--text)}
+.dash-sub{font-size:.82rem;color:var(--muted);margin-top:2px}
+
+/* empty state */
+#empty-state{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:80px 20px;text-align:center;gap:14px;
+}
+#empty-state svg{width:52px;height:52px;color:var(--faint)}
+#empty-state h3{font-family:'Lora',serif;font-size:1.15rem;font-weight:600;color:var(--muted)}
+#empty-state p{font-size:.83rem;color:var(--faint);max-width:260px;line-height:1.6}
+
+/* cards grid */
+#cards-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:16px;
+}
+.card{
+  background:var(--white);border:1px solid var(--border);
+  border-radius:10px;padding:18px 18px 14px;
+  cursor:pointer;
+  transition:box-shadow .18s, border-color .18s, transform .15s;
+  display:flex;flex-direction:column;gap:0;
+  position:relative;
+}
+.card:hover{box-shadow:0 6px 24px rgba(0,0,0,.09);border-color:#d0c9c0;transform:translateY(-1px)}
+.card-accent{height:3px;border-radius:2px;background:var(--green);margin-bottom:14px;width:36px}
+.card-title{font-family:'Lora',serif;font-size:1rem;font-weight:600;color:var(--text);margin-bottom:3px;line-height:1.3;word-break:break-word}
+.card-subject{font-size:.78rem;color:var(--muted);margin-bottom:12px}
+.card-footer{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border-soft);padding-top:10px;margin-top:auto}
+.card-time{font-size:.71rem;color:var(--faint)}
+.card-actions{display:flex;gap:4px}
+.card-btn{
+  width:28px;height:28px;border-radius:5px;border:none;background:0;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  color:var(--faint);transition:.12s;
+}
+.card-btn:hover{background:var(--bg);color:var(--text)}
+.card-btn.del:hover{background:var(--redbg);color:var(--red)}
+.card-btn svg{width:13px;height:13px;pointer-events:none}
+
+/* new card button */
+.card-new{
+  background:0;border:2px dashed var(--border);
+  border-radius:10px;padding:18px;
+  cursor:pointer;transition:.15s;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:10px;min-height:160px;color:var(--faint);
+}
+.card-new:hover{border-color:var(--gborder);background:var(--gbg);color:var(--green)}
+.card-new svg{width:28px;height:28px}
+.card-new span{font-size:.82rem;font-weight:500}
+
+/* ═══════════════════════════════
+   EDITOR VIEW
+═══════════════════════════════ */
+#view-editor{flex:1;display:none;flex-direction:column;overflow:hidden}
+#view-editor.active{display:flex}
+
+#editor-body{display:flex;flex:1;overflow:hidden;position:relative}
+
+/* sidebar */
+#sb{
+  width:264px;min-width:264px;background:#faf9f7;
+  border-right:1px solid var(--border);
+  overflow-y:auto;overflow-x:hidden;flex-shrink:0;
+  transition:width .22s,min-width .22s,opacity .22s;
+}
+#sb.closed{width:0;min-width:0;opacity:0;pointer-events:none;overflow:hidden}
+#sb::-webkit-scrollbar{width:3px}
+#sb::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+@media(max-width:640px){
+  #sb{position:absolute;top:0;left:0;height:100%;z-index:50;
+    box-shadow:4px 0 24px rgba(0,0,0,.12);width:0;min-width:0;opacity:0;pointer-events:none}
+  #sb.open{width:264px;min-width:264px;opacity:1;pointer-events:all}
+  #mob-overlay{display:block}
+}
+#mob-overlay{display:none;position:absolute;inset:0;background:rgba(0,0,0,.3);z-index:40;backdrop-filter:blur(1px)}
+
+.ss{padding:14px 13px;border-bottom:1px solid var(--border-soft)}
+.ss:last-child{border-bottom:none}
+.sl{font-size:.61rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:10px}
+.fi{margin-bottom:7px}.fi:last-child{margin-bottom:0}
+.fi label{display:block;font-size:.71rem;font-weight:500;color:var(--muted);margin-bottom:3px}
+.fi input{width:100%;height:31px;padding:0 9px;border:1px solid var(--border);border-radius:5px;font-family:'Outfit',sans-serif;font-size:.79rem;color:var(--text);background:#fff;outline:none}
+.fi input:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(28,75,46,.08)}
+.fi input::placeholder{color:var(--faint)}
+.insbtn{display:flex;align-items:center;gap:8px;width:100%;padding:7px 10px;margin-bottom:5px;border:1px solid var(--border);border-radius:5px;background:#fff;font-family:'Outfit',sans-serif;font-size:.78rem;font-weight:500;color:var(--muted);cursor:pointer;transition:.12s}
+.insbtn:last-of-type{margin-bottom:0}
+.insbtn:hover{background:var(--gbg);border-color:var(--gborder);color:var(--green)}
+.insbtn svg{width:13px;height:13px;flex-shrink:0}
+input[type=file]{display:none}
+.swatches{display:grid;grid-template-columns:repeat(8,1fr);gap:5px}
+.sw{aspect-ratio:1;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:.12s}
+.sw:hover{transform:scale(1.2)}.sw.on{border-color:var(--text)}
+
+/* toolbar */
+#tb{height:40px;min-height:40px;background:#fff;border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 10px;gap:1px;overflow-x:auto;overflow-y:hidden;flex-shrink:0}
+#tb::-webkit-scrollbar{display:none}
+.sep{width:1px;height:17px;background:var(--border);margin:0 4px;flex-shrink:0}
+.t{width:27px;height:27px;flex-shrink:0;border:none;background:0;border-radius:4px;cursor:pointer;color:var(--muted);font-size:.79rem;font-weight:700;font-family:'Outfit',sans-serif;display:flex;align-items:center;justify-content:center;transition:.12s}
+.t:hover{background:var(--bg);color:var(--text)}.t.on{background:var(--gbg);color:var(--green)}
+.t svg{width:12px;height:12px;pointer-events:none}
+.tsel{height:25px;border:1px solid var(--border);border-radius:4px;padding:0 5px;font-family:'Outfit',sans-serif;font-size:.74rem;color:var(--text);background:0;outline:none;cursor:pointer;flex-shrink:0}
+.tsel:focus{border-color:var(--green)}
+
+/* editor col */
+#ecol{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
+#canvas{flex:1;overflow-y:auto;overflow-x:hidden;padding:28px 20px;display:flex;justify-content:center;background:var(--bg)}
+@media(max-width:640px){#canvas{padding:14px 8px}}
+
+/* paper */
+#paper{width:100%;max-width:760px;background:#fff;box-shadow:0 8px 32px rgba(0,0,0,.1),0 2px 8px rgba(0,0,0,.06);border-radius:3px;padding:56px 64px 52px;flex-shrink:0}
+@media(max-width:640px){#paper{padding:28px 22px 36px}}
+.dh-bar{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2px solid var(--green);padding-bottom:16px;margin-bottom:16px}
+.dh-inst{font-family:'Lora',serif;font-size:1.2rem;font-weight:600;color:var(--green);line-height:1.25;max-width:60%}
+.dh-stag{font-size:.61rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);margin-top:6px;margin-bottom:1px}
+.dh-subj{font-family:'Lora',serif;font-size:.88rem;color:var(--muted)}
+.dh-right{text-align:right;font-size:.76rem;color:var(--muted);line-height:1.8}
+.dh-right strong{display:block;font-size:.83rem;font-weight:600;color:var(--text)}
+.dh-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding-bottom:14px;border-bottom:1px solid var(--border-soft);margin-bottom:18px}
+@media(max-width:480px){.dh-meta{grid-template-columns:1fr 1fr}}
+.mc .l{font-size:.61rem;text-transform:uppercase;letter-spacing:.07em;color:var(--faint);margin-bottom:1px}
+.mc .v{font-size:.79rem;font-weight:500;color:var(--text)}
+.dh-title{font-family:'Lora',serif;font-size:1.28rem;font-weight:600;color:var(--text);line-height:1.3;margin-bottom:22px;min-height:1.4em}
+#editor{outline:none;font-size:.92rem;line-height:1.85;font-weight:300;font-family:'Outfit',sans-serif;color:var(--text);min-height:400px;cursor:text}
+#editor:empty::before{content:'Start writing your assignment here…';color:var(--faint);pointer-events:none}
+#editor img{max-width:100%;border-radius:4px;margin:12px 0;display:block}
+#editor table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.87rem}
+#editor th{background:#f5f2ee;font-weight:600}
+#editor th,#editor td{border:1px solid var(--border);padding:7px 10px}
+#editor h1{font-family:'Lora',serif;font-size:1.4rem;font-weight:600;margin:18px 0 8px}
+#editor h2{font-family:'Lora',serif;font-size:1.15rem;font-weight:600;margin:14px 0 6px}
+#editor h3{font-size:.98rem;font-weight:600;margin:12px 0 5px}
+#editor blockquote{border-left:3px solid var(--green);padding-left:14px;color:var(--muted);font-style:italic;margin:12px 0}
+#editor pre{background:#f5f2ee;padding:12px 14px;border-radius:5px;font-family:monospace;font-size:.81rem;white-space:pre-wrap;margin:10px 0}
+#editor a{color:var(--green)}
+#editor ul,#editor ol{padding-left:20px;margin:6px 0}
+.pfooter{margin-top:40px;padding-top:12px;border-top:1px solid var(--border-soft);display:flex;justify-content:space-between;font-size:.7rem;color:var(--faint)}
+
+/* export dropdown */
+.exp-wrap{position:relative;flex-shrink:0}
+.exp-menu{display:none;position:absolute;top:calc(100%+6px);right:0;background:#fff;border:1px solid var(--border);border-radius:8px;box-shadow:0 8px 28px rgba(0,0,0,.1);padding:4px;min-width:190px;z-index:200}
+.exp-menu.open{display:block}
+.exp-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:5px;cursor:pointer;font-size:.8rem;font-weight:500;color:var(--text);transition:.12s;white-space:nowrap}
+.exp-item:hover{background:var(--gbg);color:var(--green)}
+.exp-item svg{width:13px;height:13px;flex-shrink:0;color:var(--faint)}
+.exp-item:hover svg{color:var(--green)}
+.exp-div{height:1px;background:var(--border);margin:3px 0}
+
+/* hamburger */
+#hb{width:32px;height:32px;border:1px solid var(--border);border-radius:6px;background:0;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--muted);flex-shrink:0}
+#hb:hover{background:var(--bg)}
+#hb svg{width:15px;height:15px;display:block}
+
+/* toast */
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(6px);background:var(--text);color:#fff;padding:8px 16px;border-radius:6px;font-size:.79rem;font-weight:500;opacity:0;pointer-events:none;transition:.2s;z-index:9999;white-space:nowrap}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* print */
+@media print{
+  #view-dash,#tb,#sb,#mob-overlay,.exp-menu,.topbar{display:none!important}
+  #view-editor{display:flex!important}
+  #app,#editor-body,#ecol,#canvas{display:block;height:auto;overflow:visible}
+  body{background:#fff;overflow:visible}
+  #paper{box-shadow:none;max-width:none;margin:0;border-radius:0;padding:20mm 25mm}
+}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- ══════════ DASHBOARD ══════════ -->
+  <div id="view-dash" style="display:flex;flex-direction:column">
+
+    <div class="topbar">
+      <span class="topbar-logo">Assignment Maker</span>
+      <button class="tbtn btn-green" onclick="newAssignment()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        New Assignment
+      </button>
+    </div>
+
+    <div id="dash-body" style="flex:1;overflow-y:auto;padding:32px 28px">
+      <div class="dash-header">
+        <div>
+          <div class="dash-title">My Assignments</div>
+          <div class="dash-sub" id="dash-count">0 assignments</div>
+        </div>
+      </div>
+
+      <!-- empty state -->
+      <div id="empty-state" style="display:none">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        <h3>No assignments yet</h3>
+        <p>Click "New Assignment" to create your first one. All your work is saved automatically.</p>
+        <button class="tbtn btn-green" onclick="newAssignment()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          New Assignment
+        </button>
+      </div>
+
+      <div id="cards-grid"></div>
+    </div>
+  </div>
+
+  <!-- ══════════ EDITOR ══════════ -->
+  <div id="view-editor">
+
+    <!-- editor topbar -->
+    <div class="topbar">
+      <button id="hb" onclick="toggleSB()" title="Toggle panel">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <button class="tbtn btn-back" onclick="goToDash()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="15 18 9 12 15 6"/></svg>
+        <span class="btn-label">All Assignments</span>
+      </button>
+      <span class="topbar-logo" id="editor-crumb" style="flex:1;font-size:.85rem;color:var(--muted);font-family:'Outfit',sans-serif;font-weight:400"></span>
+      <button class="tbtn btn-ghost hide-mobile" onclick="window.print()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        Print
+      </button>
+      <div class="exp-wrap" id="exp-wrap">
+        <button class="tbtn btn-green" onclick="toggleExp()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Export
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:10px;height:10px"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="exp-menu" id="exp-menu">
+          <div class="exp-item" onclick="exportPDF()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Export as PDF</div>
+          <div class="exp-div"></div>
+          <div class="exp-item" onclick="exportAs('md')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>Markdown (.md)</div>
+          <div class="exp-item" onclick="exportAs('txt')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>Plain Text (.txt)</div>
+          <div class="exp-item" onclick="exportAs('html')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>HTML file</div>
+          <div class="exp-item" onclick="exportAs('doc')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>Word Document (.doc)</div>
+          <div class="exp-div"></div>
+          <div class="exp-item" onclick="window.print();document.getElementById('exp-menu').classList.remove('open')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>Print</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- editor body -->
+    <div id="editor-body">
+      <div id="mob-overlay" onclick="toggleSB()"></div>
+
+      <!-- sidebar -->
+      <div id="sb">
+        <div class="ss">
+          <div class="sl">Assignment Details</div>
+          <div class="fi"><label>Institution / School</label><input id="s-inst" placeholder="e.g. Oxford University" oninput="upd()"/></div>
+          <div class="fi"><label>Subject / Course</label><input id="s-subj" placeholder="e.g. Advanced Biology" oninput="upd()"/></div>
+          <div class="fi"><label>Assignment Title</label><input id="s-title" placeholder="e.g. Lab Report #3" oninput="upd()"/></div>
+        </div>
+        <div class="ss">
+          <div class="sl">Student Info</div>
+          <div class="fi"><label>Student Name</label><input id="s-name" placeholder="Full name" oninput="upd()"/></div>
+          <div class="fi"><label>Roll No. / Student ID</label><input id="s-roll" placeholder="e.g. 2024-CS-042" oninput="upd()"/></div>
+          <div class="fi"><label>Instructor</label><input id="s-teacher" placeholder="e.g. Dr. Sarah Ahmed" oninput="upd()"/></div>
+          <div class="fi"><label>Submission Date</label><input type="date" id="s-date" oninput="upd()"/></div>
+        </div>
+        <div class="ss">
+          <div class="sl">Insert</div>
+          <label class="insbtn" for="img-up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>Insert Image</label>
+          <input type="file" id="img-up" accept="image/*" onchange="insImg(event)"/>
+          <label class="insbtn" for="doc-up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Import .txt / .md</label>
+          <input type="file" id="doc-up" accept=".txt,.md" onchange="impDoc(event)"/>
+        </div>
+        <div class="ss">
+          <div class="sl">Text Colour</div>
+          <div class="swatches" id="sw"></div>
+        </div>
+      </div>
+
+      <!-- editor col -->
+      <div id="ecol">
+        <!-- toolbar -->
+        <div id="tb">
+          <select class="tsel" onchange="fc('formatBlock',this.value);this.value='p'">
+            <option value="p">Paragraph</option><option value="h1">Heading 1</option>
+            <option value="h2">Heading 2</option><option value="h3">Heading 3</option>
+            <option value="blockquote">Quote</option><option value="pre">Code</option>
+          </select>
+          <div style="display:inline-flex;align-items:center;margin-left:3px;border:1px solid var(--border);border-radius:4px;overflow:hidden;flex-shrink:0;background:#fff;height:27px">
+            <button onclick="stepFontSize(-1)" title="Decrease font size"
+              style="width:22px;height:100%;border:none;border-right:1px solid var(--border);background:transparent;cursor:pointer;color:var(--muted);font-size:1rem;line-height:1;display:flex;align-items:center;justify-content:center;transition:.12s;flex-shrink:0"
+              onmouseover="this.style.background='var(--bg)'" onmouseout="this.style.background='transparent'">−</button>
+            <span id="fs-display" style="width:34px;text-align:center;font-family:'Outfit',sans-serif;font-size:.74rem;color:var(--text);pointer-events:none;user-select:none">16px</span>
+            <button onclick="stepFontSize(1)" title="Increase font size"
+              style="width:22px;height:100%;border:none;border-left:1px solid var(--border);background:transparent;cursor:pointer;color:var(--muted);font-size:1rem;line-height:1;display:flex;align-items:center;justify-content:center;transition:.12s;flex-shrink:0"
+              onmouseover="this.style.background='var(--bg)'" onmouseout="this.style.background='transparent'">+</button>
+          </div>
+          <div class="sep"></div>
+          <button class="t" id="tb-b" onclick="tog('bold')" title="Bold"><b>B</b></button>
+          <button class="t" id="tb-i" onclick="tog('italic')" title="Italic"><i style="font-family:Georgia,serif">I</i></button>
+          <button class="t" id="tb-u" onclick="tog('underline')" title="Underline"><u>U</u></button>
+          <button class="t" id="tb-s" onclick="tog('strikeThrough')" title="Strike" style="text-decoration:line-through">S</button>
+          <div class="sep"></div>
+          <button class="t" onclick="fc('justifyLeft')" title="Left"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="15" y2="12"/><line x1="3" y1="18" x2="18" y2="18"/></svg></button>
+          <button class="t" onclick="fc('justifyCenter')" title="Center"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="6" y1="12" x2="18" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></button>
+          <button class="t" onclick="fc('justifyRight')" title="Right"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="9" y1="12" x2="21" y2="12"/><line x1="6" y1="18" x2="21" y2="18"/></svg></button>
+          <button class="t" onclick="fc('justifyFull')" title="Justify"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+          <div class="sep"></div>
+          <button class="t" onclick="fc('insertUnorderedList')" title="Bullets"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="9" y1="6" x2="20" y2="6"/><line x1="9" y1="12" x2="20" y2="12"/><line x1="9" y1="18" x2="20" y2="18"/><circle cx="4" cy="6" r="1.3" fill="currentColor" stroke="none"/><circle cx="4" cy="12" r="1.3" fill="currentColor" stroke="none"/><circle cx="4" cy="18" r="1.3" fill="currentColor" stroke="none"/></svg></button>
+          <button class="t" onclick="fc('insertOrderedList')" title="Numbered"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="10" y1="6" x2="21" y2="6"/><line x1="10" y1="12" x2="21" y2="12"/><line x1="10" y1="18" x2="21" y2="18"/><text x="2" y="8" font-size="6" fill="currentColor" stroke="none" font-family="sans-serif" font-weight="700">1.</text><text x="2" y="14" font-size="6" fill="currentColor" stroke="none" font-family="sans-serif" font-weight="700">2.</text><text x="2" y="20" font-size="6" fill="currentColor" stroke="none" font-family="sans-serif" font-weight="700">3.</text></svg></button>
+          <button class="t" onclick="fc('indent')" title="Indent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/><polyline points="8 12 13 8 13 16 8 12"/></svg></button>
+          <div class="sep"></div>
+          <button class="t" onclick="doTable()" title="Table"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="1"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg></button>
+          <button class="t" onclick="doLink()" title="Link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg></button>
+          <button class="t" onclick="doHR()" title="Divider">—</button>
+          <div class="sep"></div>
+          <button class="t" onclick="fc('undo')" title="Undo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg></button>
+          <button class="t" onclick="fc('redo')" title="Redo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg></button>
+        </div>
+
+        <!-- canvas / paper -->
+        <div id="canvas">
+          <div id="paper">
+            <div class="dh-bar">
+              <div>
+                <div class="dh-inst" id="d-inst">Institution Name</div>
+                <div class="dh-stag">Subject</div>
+                <div class="dh-subj" id="d-subj">Course / Subject</div>
+              </div>
+              <div class="dh-right">
+                <strong id="d-date">—</strong>
+                <span id="d-tr"></span>
+              </div>
+            </div>
+            <div class="dh-meta">
+              <div class="mc"><div class="l">Student</div><div class="v" id="d-name">—</div></div>
+              <div class="mc"><div class="l">Roll No.</div><div class="v" id="d-roll">—</div></div>
+              <div class="mc"><div class="l">Instructor</div><div class="v" id="d-teacher">—</div></div>
+            </div>
+            <div class="dh-title" id="d-title">Assignment Title</div>
+            <div id="editor" contenteditable="true" spellcheck="true"></div>
+            <div class="pfooter"><span id="d-fn"></span><span id="d-fs"></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════
+//  STORAGE
+// ═══════════════════════════════════════
+const SK = 'am_store';
+function load() { try { return JSON.parse(localStorage.getItem(SK)) || []; } catch { return []; } }
+function save(list) { localStorage.setItem(SK, JSON.stringify(list)); }
+function genId() { return 'a' + Date.now() + Math.random().toString(36).slice(2,5); }
+
+let currentId = null;
+
+function getList() { return load(); }
+
+function getCurrent() {
+  const list = load();
+  return list.find(a => a.id === currentId) || null;
+}
+
+function capture() {
+  const g = id => (document.getElementById(id)?.value || '').trim();
+  return {
+    inst: g('s-inst'), subj: g('s-subj'), title: g('s-title'),
+    name: g('s-name'), roll: g('s-roll'), teacher: g('s-teacher'),
+    date: document.getElementById('s-date').value,
+    body: document.getElementById('editor').innerHTML,
+    updated: Date.now()
+  };
+}
+
+function apply(data) {
+  const sv = (id, v) => { const e = document.getElementById(id); if(e) e.value = v || ''; };
+  sv('s-inst', data.inst); sv('s-subj', data.subj); sv('s-title', data.title);
+  sv('s-name', data.name); sv('s-roll', data.roll); sv('s-teacher', data.teacher);
+  sv('s-date', data.date);
+  document.getElementById('editor').innerHTML = data.body || '';
+  upd();
+}
+
+function saveNow() {
+  if (!currentId) return;
+  const list = load();
+  const idx = list.findIndex(a => a.id === currentId);
+  if (idx === -1) return;
+  list[idx] = { ...list[idx], ...capture() };
+  save(list);
+}
+
+// autosave
+let saveTimer;
+document.addEventListener('input', () => { clearTimeout(saveTimer); saveTimer = setTimeout(() => { saveNow(); renderDash(); }, 1200); });
+
+// ═══════════════════════════════════════
+//  VIEWS
+// ═══════════════════════════════════════
+function showDash() {
+  saveNow();
+  document.getElementById('view-dash').style.display = 'flex';
+  document.getElementById('view-editor').classList.remove('active');
+  renderDash();
+}
+
+function showEditor(id) {
+  currentId = id;
+  const list = load();
+  const a = list.find(x => x.id === id);
+  if (!a) return;
+  apply(a);
+  document.getElementById('view-dash').style.display = 'none';
+  document.getElementById('view-editor').classList.add('active');
+  // breadcrumb
+  const crumb = document.getElementById('editor-crumb');
+  crumb.textContent = a.title || a.subj || 'Untitled';
+  // close mobile sidebar
+  document.getElementById('sb').classList.remove('open');
+}
+
+function goToDash() { showDash(); }
+
+// ═══════════════════════════════════════
+//  DASHBOARD RENDER
+// ═══════════════════════════════════════
+function renderDash() {
+  const list = load();
+  const grid = document.getElementById('cards-grid');
+  const empty = document.getElementById('empty-state');
+  const count = document.getElementById('dash-count');
+  count.textContent = list.length + ' assignment' + (list.length !== 1 ? 's' : '');
+  grid.innerHTML = '';
+
+  if (list.length === 0) {
+    empty.style.display = 'flex';
+    return;
+  }
+  empty.style.display = 'none';
+
+  // Newest first
+  [...list].reverse().forEach(a => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    const title = a.title || 'Untitled';
+    const subject = a.subj || '';
+    const ago = timeAgo(a.updated);
+
+    card.innerHTML = `
+      <div class="card-accent"></div>
+      <div class="card-title">${esc(title)}</div>
+      ${subject ? `<div class="card-subject">${esc(subject)}</div>` : '<div class="card-subject" style="color:var(--faint);font-style:italic">No subject</div>'}
+      <div class="card-footer">
+        <span class="card-time">Edited ${ago}</span>
+        <div class="card-actions">
+          <button class="card-btn del" title="Delete" onclick="deleteCard(event,'${a.id}')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6M9 6V4h6v2"/></svg>
+          </button>
+        </div>
+      </div>`;
+
+    // click card body (not delete btn) to open
+    card.addEventListener('click', e => {
+      if (!e.target.closest('.card-btn')) showEditor(a.id);
+    });
+    grid.appendChild(card);
+  });
+
+  // "+ New" card at end
+  const newCard = document.createElement('div');
+  newCard.className = 'card-new';
+  newCard.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg><span>New Assignment</span>`;
+  newCard.onclick = newAssignment;
+  grid.appendChild(newCard);
+}
+
+function esc(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function timeAgo(ts) {
+  if (!ts) return 'just now';
+  const s = Math.floor((Date.now() - ts) / 1000);
+  if (s < 60) return 'just now';
+  if (s < 3600) return Math.floor(s/60) + 'm ago';
+  if (s < 86400) return Math.floor(s/3600) + 'h ago';
+  return Math.floor(s/86400) + 'd ago';
+}
+
+function newAssignment() {
+  const id = genId();
+  const now = new Date();
+  const pad = n => String(n).padStart(2,'0');
+  const blank = { id, inst:'', subj:'', title:'', name:'', roll:'', teacher:'',
+    date:`${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`, body:'', updated:Date.now() };
+  const list = load();
+  list.push(blank);
+  save(list);
+  showEditor(id);
+}
+
+function deleteCard(e, id) {
+  e.stopPropagation();
+  if (!confirm('Delete this assignment? This cannot be undone.')) return;
+  const list = load().filter(a => a.id !== id);
+  save(list);
+  renderDash();
+}
+
+// ═══════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════
+(function init() {
+  renderDash();
+  // Show dash by default
+  document.getElementById('view-dash').style.display = 'flex';
+})();
+
+// ═══════════════════════════════════════
+//  SIDEBAR TOGGLE
+// ═══════════════════════════════════════
+const sbEl = document.getElementById('sb');
+const isMob = () => window.innerWidth <= 640;
+function toggleSB() {
+  if (isMob()) sbEl.classList.toggle('open');
+  else sbEl.classList.toggle('closed');
+}
+window.addEventListener('resize', () => {
+  if (!isMob()) sbEl.classList.remove('open');
+  else sbEl.classList.remove('closed');
+});
+
+// ═══════════════════════════════════════
+//  DOC HEADER
+// ═══════════════════════════════════════
+function upd() {
+  const g = id => (document.getElementById(id)?.value || '').trim();
+  const s = (id, v, fb) => { const e=document.getElementById(id); if(e) e.textContent = v||fb; };
+  s('d-inst', g('s-inst'), 'Institution Name');
+  s('d-subj', g('s-subj'), 'Course / Subject');
+  s('d-name', g('s-name'), '—'); s('d-roll', g('s-roll'), '—'); s('d-teacher', g('s-teacher'), '—');
+  const tr=document.getElementById('d-tr'); if(tr) tr.textContent = g('s-teacher') ? 'Instructor: '+g('s-teacher') : '';
+  const dv=document.getElementById('s-date').value;
+  s('d-date', dv ? new Date(dv+'T12:00:00').toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}) : '—', '—');
+  s('d-title', g('s-title'), 'Assignment Title');
+  s('d-fn', g('s-name'), ''); s('d-fs', g('s-subj'), '');
+  // update breadcrumb live
+  const crumb = document.getElementById('editor-crumb');
+  if (crumb) crumb.textContent = g('s-title') || g('s-subj') || 'Untitled';
+}
+
+// ═══════════════════════════════════════
+//  FORMATTING
+// ═══════════════════════════════════════
+let _savedRange = null;
+
+function saveRange() {
+  const sel = window.getSelection();
+  if (sel && sel.rangeCount > 0) _savedRange = sel.getRangeAt(0).cloneRange();
+}
+
+function restoreRange() {
+  if (!_savedRange) return;
+  const sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(_savedRange);
+}
+
+function getCurrentFontSize() {
+  const sel = window.getSelection();
+  if (!sel || !sel.anchorNode) return 16;
+  const el = sel.anchorNode.nodeType === 3 ? sel.anchorNode.parentElement : sel.anchorNode;
+  const fs = window.getComputedStyle(el).fontSize;
+  return fs ? Math.round(parseFloat(fs)) : 16;
+}
+
+function applyFontSize(px) {
+  const size = parseInt(px);
+  if (!size || size < 6 || size > 96) return;
+  restoreRange();
+  document.execCommand('fontSize', false, '7');
+  document.querySelectorAll('#editor font[size="7"]').forEach(el => {
+    el.removeAttribute('size');
+    el.style.fontSize = size + 'px';
+  });
+  document.getElementById('fs-display').textContent = size + 'px';
+  tbSt();
+}
+
+function stepFontSize(delta) {
+  const current = getCurrentFontSize();
+  applyFontSize(current + delta);
+}
+
+function fc(cmd, val=null) { document.getElementById('editor').focus(); document.execCommand(cmd,false,val); tbSt(); }
+function tog(cmd) { fc(cmd); }
+const edEl = document.getElementById('editor');
+edEl.addEventListener('keyup', tbSt); edEl.addEventListener('mouseup', tbSt);
+function tbSt() {
+  [['tb-b','bold'],['tb-i','italic'],['tb-u','underline'],['tb-s','strikeThrough']].forEach(([id,cmd])=>{
+    document.getElementById(id)?.classList.toggle('on', document.queryCommandState(cmd));
+  });
+  // Save selection so +/- can restore it
+  saveRange();
+  // Update font size display
+  const px = getCurrentFontSize();
+  const disp = document.getElementById('fs-display');
+  if (disp) disp.textContent = px + 'px';
+}
+function doHR() { fc('insertHTML','<hr style="border:none;border-top:1px solid #e0dbd3;margin:14px 0"/><br/>'); }
+function doLink() { const u=prompt('URL:','https://'); if(u) fc('createLink',u); }
+function doTable() {
+  const r=parseInt(prompt('Rows:','3')||0), c=parseInt(prompt('Columns:','3')||0); if(!r||!c) return;
+  let h='<table style="width:100%;border-collapse:collapse;margin:12px 0">';
+  for(let i=0;i<r;i++){h+='<tr>';for(let j=0;j<c;j++) h+=i===0?'<th style="border:1px solid #e0dbd3;padding:7px 10px;background:#f5f2ee;font-weight:600">Col</th>':'<td style="border:1px solid #e0dbd3;padding:7px 10px"> </td>';h+='</tr>';}
+  fc('insertHTML',h+'</table><br/>');
+}
+
+// ═══════════════════════════════════════
+//  IMAGE / DOC INSERT
+// ═══════════════════════════════════════
+function insImg(e) {
+  const file=e.target.files[0]; if(!file) return;
+  const r=new FileReader();
+  r.onload=ev=>fc('insertHTML',`<img src="${ev.target.result}" style="max-width:100%;border-radius:4px;margin:12px 0;display:block"/><br/>`);
+  r.readAsDataURL(file); e.target.value='';
+}
+function impDoc(e) {
+  const file=e.target.files[0]; if(!file) return;
+  const r=new FileReader();
+  r.onload=ev=>{ const html=ev.target.result.split('\n').map(l=>l.trim()?`<p>${l}</p>`:'<br/>').join(''); document.getElementById('editor').innerHTML+=html; notify('Imported'); };
+  r.readAsText(file); e.target.value='';
+}
+
+// ═══════════════════════════════════════
+//  COLOUR SWATCHES
+// ═══════════════════════════════════════
+['#1c1917','#1c4b2e','#1a3a6b','#7a1c1c','#7c4d00','#5b4a9e','#666','#c0392b','#27ae60','#2980b9','#d35400','#8e44ad'].forEach(c=>{
+  const el=document.createElement('div'); el.className='sw'; el.style.background=c; el.title=c;
+  el.onclick=()=>{fc('foreColor',c);document.querySelectorAll('.sw').forEach(s=>s.classList.remove('on'));el.classList.add('on');};
+  document.getElementById('sw').appendChild(el);
+});
+
+// ═══════════════════════════════════════
+//  EXPORT
+// ═══════════════════════════════════════
+function toggleExp() { document.getElementById('exp-menu').classList.toggle('open'); }
+document.addEventListener('click', e => { if (!document.getElementById('exp-wrap').contains(e.target)) document.getElementById('exp-menu').classList.remove('open'); });
+
+function getMeta() {
+  const g = id => (document.getElementById(id)?.value || '').trim();
+  return { inst:g('s-inst')||'Institution', subj:g('s-subj')||'Subject', title:g('s-title')||'Assignment',
+    name:g('s-name')||'Student', roll:g('s-roll'), teacher:g('s-teacher'),
+    date:(()=>{ const dv=document.getElementById('s-date').value; return dv?new Date(dv+'T12:00:00').toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}):''; })() };
+}
+function dl(name, content, mime) {
+  const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([content],{type:mime})); a.download=name; a.click(); URL.revokeObjectURL(a.href);
+}
+function h2txt(html) { const d=document.createElement('div'); d.innerHTML=html; return d.innerText||d.textContent||''; }
+function h2md(html) {
+  return html
+    .replace(/<h1[^>]*>(.*?)<\/h1>/gi,'\n# $1\n').replace(/<h2[^>]*>(.*?)<\/h2>/gi,'\n## $1\n').replace(/<h3[^>]*>(.*?)<\/h3>/gi,'\n### $1\n')
+    .replace(/<strong[^>]*>(.*?)<\/strong>/gi,'**$1**').replace(/<b[^>]*>(.*?)<\/b>/gi,'**$1**')
+    .replace(/<em[^>]*>(.*?)<\/em>/gi,'*$1*').replace(/<i[^>]*>(.*?)<\/i>/gi,'*$1*')
+    .replace(/<a[^>]+href="([^"]*)"[^>]*>(.*?)<\/a>/gi,'[$2]($1)')
+    .replace(/<li[^>]*>(.*?)<\/li>/gi,'- $1\n').replace(/<br\s*\/?>/gi,'\n')
+    .replace(/<p[^>]*>(.*?)<\/p>/gi,'$1\n').replace(/<blockquote[^>]*>(.*?)<\/blockquote>/gi,'> $1\n')
+    .replace(/<hr[^>]*>/gi,'\n---\n').replace(/<[^>]+>/g,'')
+    .replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&nbsp;/g,' ')
+    .replace(/\n{3,}/g,'\n\n').trim();
+}
+function exportAs(type) {
+  document.getElementById('exp-menu').classList.remove('open');
+  const m=getMeta(), fname=(m.name.replace(/\s+/g,'_')||'assignment'), body=document.getElementById('editor').innerHTML;
+  if(type==='txt') dl(fname+'_assignment.txt', `${m.inst}\n${m.subj}\n${m.title}\n\nStudent: ${m.name}${m.roll?' | Roll: '+m.roll:''}${m.teacher?' | Instructor: '+m.teacher:''}\nDate: ${m.date}\n\n${'─'.repeat(40)}\n\n`+h2txt(body), 'text/plain');
+  else if(type==='md') dl(fname+'_assignment.md', `# ${m.title}\n\n**Institution:** ${m.inst}  \n**Subject:** ${m.subj}  \n**Student:** ${m.name}${m.roll?' | **Roll No:** '+m.roll:''}  \n${m.teacher?'**Instructor:** '+m.teacher+'  \n':''}**Date:** ${m.date}\n\n---\n\n`+h2md(body), 'text/markdown');
+  else if(type==='html') dl(fname+'_assignment.html', `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${m.title}</title><style>body{font-family:Georgia,serif;max-width:760px;margin:40px auto;padding:0 32px;line-height:1.8}table{width:100%;border-collapse:collapse}th,td{border:1px solid #ddd;padding:8px}th{background:#f5f5f5}.hd{border-bottom:2px solid #1c4b2e;padding-bottom:16px;margin-bottom:16px;color:#1c4b2e}</style></head><body><div class="hd"><h2>${m.inst}</h2><p>${m.subj}</p><small>Student: ${m.name} | Date: ${m.date}</small></div><h1>${m.title}</h1>${body}</body></html>`, 'text/html');
+  else if(type==='doc') dl(fname+'_assignment.doc', `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word"><head><meta charset="UTF-8"><style>body{font-family:Calibri,sans-serif;font-size:12pt;margin:72pt 90pt;line-height:1.6}h1{font-size:18pt}</style></head><body><h2 style="color:#1c4b2e">${m.inst}</h2><p>${m.subj}</p><p><b>Student:</b> ${m.name} &nbsp; <b>Roll:</b> ${m.roll} &nbsp; <b>Instructor:</b> ${m.teacher} &nbsp; <b>Date:</b> ${m.date}</p><hr/><h1>${m.title}</h1>${body}</body></html>`, 'application/msword');
+  notify('Exported as .'+type);
+}
+
+async function exportPDF() {
+  document.getElementById('exp-menu').classList.remove('open');
+  notify('Generating PDF…');
+  try {
+    const {jsPDF}=window.jspdf;
+    document.getElementById('editor').blur();
+    const paper=document.getElementById('paper');
+    const origPad=paper.style.padding; paper.style.padding='60px 72px 56px';
+    const canvas=await html2canvas(paper,{scale:2,useCORS:true,backgroundColor:'#fff',logging:false});
+    paper.style.padding=origPad;
+    const img=canvas.toDataURL('image/png');
+    const pdf=new jsPDF({unit:'mm',format:'a4',orientation:'portrait'});
+    const pW=pdf.internal.pageSize.getWidth(), pH=pdf.internal.pageSize.getHeight();
+    const margin=12, cW=pW-margin*2, cH=(canvas.height/2)*(cW/(canvas.width/2));
+    let y=0;
+    while(y<cH){if(y>0)pdf.addPage();pdf.addImage(img,'PNG',margin,margin-y,cW,cH);y+=pH-margin*2;}
+    pdf.save((document.getElementById('s-name').value.trim().replace(/\s+/g,'_')||'assignment')+'_assignment.pdf');
+    notify('PDF saved!');
+  } catch(err){notify('Export failed — try Print');console.error(err);}
+}
+
+// ═══════════════════════════════════════
+//  TOAST
+// ═══════════════════════════════════════
+function notify(msg) {
+  const el=document.getElementById('toast'); el.textContent=msg; el.classList.add('show');
+  clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove('show'),2600);
+}
+</script>
+</body>
+</html>
