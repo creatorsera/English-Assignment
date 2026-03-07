@@ -15,6 +15,126 @@
   --green:#1c4b2e;--green2:#2d6a42;--gbg:#eaf3ec;--gborder:#b5d9be;
   --red:#c0392b;--redbg:#fce8e8;
 }
+
+/* ── DARK MODE: full override ── */
+body.dark{
+  --bg:#18171a;--white:#242228;--border:#38353e;--border-soft:#2e2c33;
+  --text:#e4e0ee;--muted:#9a95a8;--faint:#524e5c;
+  --green:#6dbf8a;--green2:#7ed49b;--gbg:#1b2820;--gborder:#2d5a3d;
+  --red:#e05c4f;--redbg:#2e1a1a;
+}
+body.dark,
+body.dark #app,
+body.dark #view-dash,
+body.dark #dash-body{ background:var(--bg); color:var(--text); }
+
+body.dark .topbar{ background:#1e1c22; border-color:var(--border); }
+body.dark .topbar-logo{ color:var(--green); }
+body.dark .tbtn{ color:var(--muted); border-color:var(--border); }
+body.dark .btn-ghost{ background:transparent; color:var(--muted); }
+body.dark .btn-ghost:hover{ background:var(--border); color:var(--text); }
+body.dark .btn-green{ background:var(--green); color:#000; border-color:var(--green); }
+body.dark .btn-back{ background:transparent; color:var(--text); border-color:var(--border); }
+
+body.dark #sb{ background:#1c1a20; border-color:var(--border); }
+body.dark .ss{ border-color:var(--border-soft); }
+body.dark .sl{ color:var(--faint); }
+body.dark .fi label{ color:var(--muted); }
+body.dark .fi input,
+body.dark .fi input[type=date],
+body.dark .fi input[type=datetime-local]{ background:#28252e; color:var(--text); border-color:var(--border); }
+body.dark .fi input::placeholder{ color:var(--faint); }
+body.dark .fi input:focus{ border-color:var(--green); }
+body.dark .insbtn{ background:#28252e; color:var(--muted); border-color:var(--border); }
+body.dark .insbtn:hover{ background:var(--gbg); border-color:var(--gborder); color:var(--green); }
+body.dark .tpl-btn{ background:#28252e; border-color:var(--border); }
+body.dark .tpl-btn:hover{ background:var(--gbg); border-color:var(--gborder); }
+body.dark .tpl-name{ color:var(--text); }
+body.dark .font-opt{ background:#28252e; border-color:var(--border); color:var(--muted); }
+body.dark .font-opt.on{ background:var(--gbg); border-color:var(--gborder); color:var(--green); }
+
+body.dark #tb{ background:#1e1c22; border-color:var(--border); }
+body.dark .t{ color:var(--muted); }
+body.dark .t:hover{ background:var(--border); color:var(--text); }
+body.dark .t.on{ background:var(--gbg); color:var(--green); }
+body.dark .tsel{ background:#28252e; color:var(--text); border-color:var(--border); }
+body.dark .sep{ background:var(--border); }
+
+body.dark #canvas{ background:var(--bg); }
+body.dark #paper{
+  background:#26232d;
+  color:var(--text);
+  box-shadow:0 8px 32px rgba(0,0,0,.5);
+}
+body.dark .dh-inst{ color:var(--green); }
+body.dark .dh-subj{ color:var(--muted); }
+body.dark .dh-right{ color:var(--muted); }
+body.dark .dh-right strong{ color:var(--text); }
+body.dark .mc .l{ color:var(--faint); }
+body.dark .mc .v{ color:var(--text); }
+body.dark .dh-title{ color:var(--text); }
+body.dark #editor{ color:var(--text); caret-color:var(--text); }
+body.dark #editor:empty::before{ color:var(--faint); }
+body.dark #editor blockquote{ color:var(--muted); border-color:var(--green); }
+body.dark #editor pre{ background:#1a1820; color:var(--text); }
+body.dark #editor a{ color:var(--green); }
+body.dark #editor th{ background:#2e2a38; color:var(--text); }
+body.dark #editor td{ color:var(--text); }
+body.dark #editor th, body.dark #editor td{ border-color:var(--border); }
+body.dark .pfooter{ color:var(--faint); border-color:var(--border-soft); }
+
+body.dark #wc-bar{ background:#1e1c22; border-color:var(--border); }
+body.dark #wc-bar span{ color:var(--faint); }
+body.dark #wc-bar b{ color:var(--muted); }
+
+body.dark .exp-menu{ background:#1e1c22; border-color:var(--border); }
+body.dark .exp-item{ color:var(--text); }
+body.dark .exp-item:hover{ background:var(--gbg); color:var(--green); }
+body.dark .exp-div{ background:var(--border); }
+
+body.dark #find-bar{ background:#1e1c22; border-color:var(--border); }
+body.dark #find-bar input{ background:#28252e; color:var(--text); border-color:var(--border); }
+body.dark .fb-btn{ background:#28252e; color:var(--text); border-color:var(--border); }
+body.dark .fb-btn:hover{ background:var(--gbg); border-color:var(--gborder); color:var(--green); }
+body.dark .fb-close{ color:var(--faint); }
+body.dark .fb-count{ color:var(--faint); }
+
+body.dark .card{ background:#1e1c22; border-color:var(--border); }
+body.dark .card:hover{ border-color:#4a4650; box-shadow:0 6px 24px rgba(0,0,0,.3); }
+body.dark .card-title{ color:var(--text); }
+body.dark .card-subject{ color:var(--muted); }
+body.dark .card-footer{ border-color:var(--border-soft); }
+body.dark .card-time{ color:var(--faint); }
+body.dark .card-btn{ color:var(--faint); }
+body.dark .card-btn:hover{ background:var(--border); color:var(--text); }
+body.dark .card-btn.del:hover{ background:var(--redbg); color:var(--red); }
+body.dark .card-new{ border-color:var(--border); color:var(--faint); }
+body.dark .card-new:hover{ border-color:var(--gborder); background:var(--gbg); color:var(--green); }
+body.dark .dash-title{ color:var(--text); }
+body.dark .dash-sub{ color:var(--muted); }
+body.dark #dash-search{ background:#1e1c22; color:var(--text); border-color:var(--border); }
+body.dark #dash-search::placeholder{ color:var(--faint); }
+body.dark #empty-state h3{ color:var(--muted); }
+body.dark #empty-state p{ color:var(--faint); }
+
+body.dark #share-box{ background:#1e1c22; color:var(--text); }
+body.dark #share-box h3{ color:var(--text); }
+body.dark #share-box p{ color:var(--muted); }
+body.dark #share-url{ background:#28252e; color:var(--text); border-color:var(--border); }
+body.dark .share-btns .fb-btn{ background:#28252e; color:var(--text); }
+body.dark #share-status{ color:var(--muted); }
+
+body.dark #focus-overlay{ background:var(--bg); }
+body.dark #focus-paper #paper{ background:#26232d !important; color:var(--text) !important; }
+body.dark #focus-exit{ background:#1e1c22; color:var(--text); border-color:var(--border); }
+
+body.dark .ai-panel{ background:#1e1c22; border-color:var(--border); }
+body.dark .ai-key-input{ background:#28252e; color:var(--text); border-color:var(--border); }
+body.dark .ai-key-input::placeholder{ color:var(--faint); }
+body.dark .ai-btn{ background:#28252e; border-color:var(--border); color:var(--muted); }
+body.dark .ai-btn:hover{ background:var(--gbg); border-color:var(--gborder); color:var(--green); }
+body.dark .ai-result{ background:#28252e; color:var(--text); border-color:var(--border); }
+body.dark #toast{ background:var(--text); color:var(--bg); }
 html,body{height:100%;font-family:'Outfit',sans-serif;font-size:14px;color:var(--text);background:var(--bg);overflow:hidden}
 #app{display:flex;flex-direction:column;height:100vh}
 
@@ -165,11 +285,13 @@ input[type=file]{display:none}
 
 /* editor col */
 #ecol{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
-#canvas{flex:1;overflow-y:auto;overflow-x:hidden;padding:28px 20px;display:flex;justify-content:center;background:var(--bg)}
-@media(max-width:640px){#canvas{padding:14px 8px}}
+#canvas{flex:1;overflow-y:auto;overflow-x:hidden;padding:28px 20px 48px;display:flex;justify-content:center;align-items:flex-start;background:var(--bg)}
+@media(max-width:640px){#canvas{padding:14px 8px 40px}}
 
 /* paper */
-#paper{width:100%;max-width:760px;background:#fff;box-shadow:0 8px 32px rgba(0,0,0,.1),0 2px 8px rgba(0,0,0,.06);border-radius:3px;padding:56px 64px 52px;flex-shrink:0}
+#paper{width:100%;max-width:760px;background:#fff;box-shadow:0 8px 32px rgba(0,0,0,.1),0 2px 8px rgba(0,0,0,.06);border-radius:3px;padding:56px 64px 52px;flex-shrink:0;align-self:flex-start;
+  background-image:repeating-linear-gradient(to bottom,transparent 0,transparent calc(1122px - 1px),rgba(0,0,0,.06) calc(1122px - 1px),rgba(0,0,0,.06) 1122px);
+}
 @media(max-width:640px){#paper{padding:28px 22px 36px}}
 .dh-bar{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2px solid var(--green);padding-bottom:16px;margin-bottom:16px}
 .dh-inst{font-family:'Lora',serif;font-size:1.2rem;font-weight:600;color:var(--green);line-height:1.25;max-width:60%}
@@ -207,6 +329,34 @@ input[type=file]{display:none}
 .exp-item:hover svg{color:var(--green)}
 .exp-div{height:1px;background:var(--border);margin:3px 0}
 
+/* AI Assistant panel */
+.ai-panel{ padding:0; }
+.ai-key-wrap{ display:flex; gap:6px; margin-bottom:8px; }
+.ai-key-input{ flex:1; height:30px; padding:0 8px; border:1px solid var(--border); border-radius:5px; font-family:'Outfit',sans-serif; font-size:.75rem; color:var(--text); background:#fff; outline:none; }
+.ai-key-input:focus{ border-color:var(--green); }
+.ai-key-save{ height:30px; padding:0 10px; border:1px solid var(--green); border-radius:5px; background:var(--green); color:#fff; font-family:'Outfit',sans-serif; font-size:.74rem; cursor:pointer; white-space:nowrap; }
+.ai-key-save:hover{ background:var(--green2); }
+.ai-key-note{ font-size:.67rem; color:var(--faint); line-height:1.5; margin-bottom:10px; }
+.ai-key-note a{ color:var(--green); }
+.ai-btns{ display:flex; flex-direction:column; gap:5px; }
+.ai-btn{ display:flex; align-items:center; gap:8px; width:100%; padding:7px 10px; border:1px solid var(--border); border-radius:5px; background:#fff; font-family:'Outfit',sans-serif; font-size:.78rem; font-weight:500; color:var(--muted); cursor:pointer; transition:.12s; text-align:left; }
+.ai-btn:hover{ background:var(--gbg); border-color:var(--gborder); color:var(--green); }
+.ai-btn:hover svg{ color:var(--green); }
+.ai-btn svg{ width:13px; height:13px; flex-shrink:0; color:var(--faint); }
+.ai-btn:disabled{ opacity:.5; cursor:not-allowed; }
+.ai-status{ font-size:.72rem; color:var(--muted); margin-top:8px; min-height:16px; font-style:italic; }
+.ai-result-wrap{ margin-top:10px; display:none; }
+.ai-result-wrap.open{ display:block; }
+.ai-result-label{ font-size:.68rem; font-weight:600; text-transform:uppercase; letter-spacing:.07em; color:var(--faint); margin-bottom:5px; }
+.ai-result{ width:100%; min-height:80px; max-height:180px; overflow-y:auto; padding:8px 10px; border:1px solid var(--border); border-radius:5px; font-family:'Outfit',sans-serif; font-size:.79rem; line-height:1.6; color:var(--text); background:#faf9f7; resize:none; outline:none; }
+.ai-result-btns{ display:flex; gap:6px; margin-top:6px; }
+.ai-result-btns button{ flex:1; height:28px; border-radius:5px; border:1px solid var(--border); font-family:'Outfit',sans-serif; font-size:.74rem; cursor:pointer; font-weight:500; }
+.ai-insert-btn{ background:var(--green); color:#fff; border-color:var(--green); }
+.ai-insert-btn:hover{ background:var(--green2); }
+.ai-discard-btn{ background:var(--bg); color:var(--muted); }
+.ai-discard-btn:hover{ background:var(--border); color:var(--text); }
+.ai-no-key{ font-size:.76rem; color:var(--faint); line-height:1.6; padding:6px 0; }
+
 /* hamburger */
 #hb{width:32px;height:32px;border:1px solid var(--border);border-radius:6px;background:0;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--muted);flex-shrink:0}
 #hb:hover{background:var(--bg)}
@@ -224,6 +374,96 @@ input[type=file]{display:none}
   body{background:#fff;overflow:visible}
   #paper{box-shadow:none;max-width:none;margin:0;border-radius:0;padding:20mm 25mm}
 }
+
+/* word count bar */
+#wc-bar{
+  height:28px;min-height:28px;background:var(--white);border-top:1px solid var(--border-soft);
+  display:flex;align-items:center;padding:0 14px;gap:16px;flex-shrink:0;
+}
+#wc-bar span{font-size:.69rem;color:var(--faint)}
+#wc-bar span b{color:var(--muted);font-weight:500}
+
+/* find & replace bar */
+#find-bar{
+  display:none;position:absolute;top:44px;right:16px;z-index:300;
+  background:#fff;border:1px solid var(--border);border-radius:8px;
+  box-shadow:0 8px 28px rgba(0,0,0,.12);padding:10px 12px;
+  display:none;flex-direction:column;gap:7px;min-width:280px;
+}
+#find-bar.open{display:flex}
+#find-bar .fb-row{display:flex;gap:6px;align-items:center}
+#find-bar input{flex:1;height:28px;padding:0 8px;border:1px solid var(--border);border-radius:5px;font-family:'Outfit',sans-serif;font-size:.78rem;color:var(--text);outline:none}
+#find-bar input:focus{border-color:var(--green)}
+#find-bar .fb-btn{height:28px;padding:0 10px;border:1px solid var(--border);border-radius:5px;background:var(--bg);font-family:'Outfit',sans-serif;font-size:.74rem;cursor:pointer;white-space:nowrap;color:var(--text)}
+#find-bar .fb-btn:hover{background:var(--gbg);border-color:var(--gborder);color:var(--green)}
+#find-bar .fb-btn.green{background:var(--green);color:#fff;border-color:var(--green)}
+#find-bar .fb-btn.green:hover{background:var(--green2)}
+#find-bar .fb-close{width:22px;height:22px;border:none;background:none;cursor:pointer;color:var(--faint);font-size:1.1rem;line-height:1;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+#find-bar .fb-close:hover{color:var(--text)}
+#find-bar .fb-count{font-size:.7rem;color:var(--faint);min-width:48px;text-align:right}
+
+/* dashboard search */
+#dash-search-wrap{position:relative;margin-bottom:20px}
+#dash-search{width:100%;height:36px;padding:0 12px 0 34px;border:1px solid var(--border);border-radius:7px;font-family:'Outfit',sans-serif;font-size:.83rem;color:var(--text);background:var(--white);outline:none}
+#dash-search:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(28,75,46,.08)}
+#dash-search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--faint);pointer-events:none}
+#dash-search-icon svg{width:14px;height:14px}
+#dash-search::placeholder{color:var(--faint)}
+
+/* deadline badge */
+.card-deadline{display:inline-flex;align-items:center;gap:4px;font-size:.67rem;font-weight:600;padding:2px 7px;border-radius:20px;margin-bottom:10px;width:fit-content}
+.dl-ok{background:#eaf3ec;color:#1c4b2e}
+.dl-soon{background:#fff8e1;color:#b45309}
+.dl-overdue{background:var(--redbg);color:var(--red)}
+.dl-today{background:#fff0e6;color:#c05c00}
+
+/* focus mode */
+#focus-overlay{display:none;position:fixed;inset:0;background:var(--bg);z-index:500;overflow-y:auto;padding:48px 20px 80px;justify-content:center}
+#focus-overlay.open{display:flex}
+#focus-paper{width:100%;max-width:760px;align-self:flex-start}
+#focus-exit{position:fixed;top:16px;right:20px;background:var(--white);border:1px solid var(--border);border-radius:6px;padding:6px 14px;font-family:'Outfit',sans-serif;font-size:.78rem;cursor:pointer;color:var(--muted);z-index:501;display:flex;align-items:center;gap:6px}
+#focus-exit:hover{background:var(--bg);color:var(--text)}
+body.dark #focus-overlay{background:var(--bg)}
+body.dark #focus-paper{background:var(--white)}
+body.dark #focus-exit{background:var(--white);color:var(--text)}
+
+/* share modal */
+#share-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:600;align-items:center;justify-content:center;backdrop-filter:blur(2px)}
+#share-modal.open{display:flex}
+#share-box{background:var(--white);border-radius:12px;padding:24px;width:100%;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+#share-box h3{font-family:'Lora',serif;font-size:1.05rem;font-weight:600;margin-bottom:6px}
+#share-box p{font-size:.79rem;color:var(--muted);margin-bottom:16px;line-height:1.5}
+#share-url{width:100%;height:34px;padding:0 10px;border:1px solid var(--border);border-radius:6px;font-family:'Outfit',sans-serif;font-size:.76rem;color:var(--text);background:var(--bg);outline:none;margin-bottom:10px}
+.share-btns{display:flex;gap:8px}
+.share-btns button{flex:1;height:34px;border-radius:6px;border:1px solid var(--border);font-family:'Outfit',sans-serif;font-size:.78rem;cursor:pointer;font-weight:500}
+#share-copy-btn{background:var(--green);color:#fff;border-color:var(--green)}
+#share-copy-btn:hover{background:var(--green2)}
+#share-close-btn{background:var(--bg);color:var(--text)}
+#share-close-btn:hover{background:var(--border)}
+#share-status{font-size:.74rem;color:var(--muted);margin-top:8px;min-height:18px;text-align:center}
+body.dark #share-box{background:var(--white)}
+body.dark #share-url{background:var(--bg);color:var(--text)}
+
+/* templates panel */
+.tpl-btn{display:flex;align-items:flex-start;gap:9px;width:100%;padding:8px 10px;margin-bottom:5px;border:1px solid var(--border);border-radius:5px;background:#fff;font-family:'Outfit',sans-serif;cursor:pointer;transition:.12s;text-align:left}
+.tpl-btn:last-of-type{margin-bottom:0}
+.tpl-btn:hover{background:var(--gbg);border-color:var(--gborder)}
+.tpl-btn:hover .tpl-name{color:var(--green)}
+.tpl-btn svg{width:14px;height:14px;flex-shrink:0;color:var(--faint);margin-top:1px}
+.tpl-btn:hover svg{color:var(--green)}
+.tpl-name{font-size:.78rem;font-weight:500;color:var(--text);line-height:1.2}
+.tpl-desc{font-size:.7rem;color:var(--faint);line-height:1.4;margin-top:1px}
+
+/* accent colour picker */
+.acc-swatches{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+.acc-sw{width:22px;height:22px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:.12s;flex-shrink:0}
+.acc-sw:hover{transform:scale(1.15)}.acc-sw.on{border-color:var(--text);transform:scale(1.1)}
+
+/* font picker */
+.font-opts{display:flex;flex-direction:column;gap:4px;margin-top:2px}
+.font-opt{padding:6px 10px;border:1px solid var(--border);border-radius:5px;cursor:pointer;font-size:.78rem;color:var(--muted);transition:.12s;background:#fff}
+.font-opt:hover{background:var(--gbg);border-color:var(--gborder);color:var(--green)}
+.font-opt.on{background:var(--gbg);border-color:var(--gborder);color:var(--green);font-weight:500}
 </style>
 </head>
 <body>
@@ -234,6 +474,9 @@ input[type=file]{display:none}
 
     <div class="topbar">
       <span class="topbar-logo">Assignment Maker</span>
+      <button class="tbtn btn-ghost" onclick="toggleDark()" id="dark-btn-dash" title="Toggle dark mode">
+        <svg id="dark-icon-dash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+      </button>
       <button class="tbtn btn-green" onclick="newAssignment()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         New Assignment
@@ -246,6 +489,12 @@ input[type=file]{display:none}
           <div class="dash-title">My Assignments</div>
           <div class="dash-sub" id="dash-count">0 assignments</div>
         </div>
+      </div>
+
+      <!-- search -->
+      <div id="dash-search-wrap">
+        <div id="dash-search-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+        <input id="dash-search" placeholder="Search assignments…" oninput="renderDash()" />
       </div>
 
       <!-- empty state -->
@@ -279,6 +528,21 @@ input[type=file]{display:none}
       <button class="tbtn btn-ghost hide-mobile" onclick="window.print()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
         Print
+      </button>
+      <button class="tbtn btn-ghost hide-mobile" onclick="toggleFindBar()" title="Find & Replace (Ctrl+H)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        Find
+      </button>
+      <button class="tbtn btn-ghost hide-mobile" onclick="enterFocus()" title="Focus Mode">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg>
+        Focus
+      </button>
+      <button class="tbtn btn-ghost hide-mobile" onclick="shareAssignment()" title="Share">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        Share
+      </button>
+      <button class="tbtn btn-ghost" onclick="toggleDark()" id="dark-btn-editor" title="Toggle dark mode">
+        <svg id="dark-icon-editor" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
       </button>
       <div class="exp-wrap" id="exp-wrap">
         <button class="tbtn btn-green" onclick="toggleExp()">
@@ -317,6 +581,38 @@ input[type=file]{display:none}
           <div class="fi"><label>Roll No. / Student ID</label><input id="s-roll" placeholder="e.g. 2024-CS-042" oninput="upd()"/></div>
           <div class="fi"><label>Instructor</label><input id="s-teacher" placeholder="e.g. Dr. Sarah Ahmed" oninput="upd()"/></div>
           <div class="fi"><label>Submission Date</label><input type="date" id="s-date" oninput="upd()"/></div>
+          <div class="fi"><label>⏰ Deadline (for tracker)</label><input type="datetime-local" id="s-deadline" oninput="saveDeadline()"/></div>
+        </div>
+        <div class="ss">
+          <div class="sl">Templates</div>
+          <button class="tpl-btn" onclick="applyTemplate('essay')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            <div><div class="tpl-name">Essay</div><div class="tpl-desc">Intro, Arguments, Conclusion</div></div>
+          </button>
+          <button class="tpl-btn" onclick="applyTemplate('lab')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v11l-4 8h14l-4-8V3"/></svg>
+            <div><div class="tpl-name">Lab Report</div><div class="tpl-desc">Aim, Method, Results, Discussion</div></div>
+          </button>
+          <button class="tpl-btn" onclick="applyTemplate('research')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <div><div class="tpl-name">Research Paper</div><div class="tpl-desc">Abstract, Lit Review, Methodology, References</div></div>
+          </button>
+          <button class="tpl-btn" onclick="applyTemplate('casestudy')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            <div><div class="tpl-name">Case Study</div><div class="tpl-desc">Background, Analysis, Recommendations</div></div>
+          </button>
+        </div>
+        <div class="ss">
+          <div class="sl">Accent Colour</div>
+          <div class="acc-swatches" id="acc-sw"></div>
+        </div>
+        <div class="ss">
+          <div class="sl">Body Font</div>
+          <div class="font-opts" id="font-opts">
+            <div class="font-opt on" style="font-family:'Outfit',sans-serif" onclick="setFont('outfit')">Sans-serif — Outfit</div>
+            <div class="font-opt" style="font-family:'Lora',serif" onclick="setFont('lora')">Serif — Lora</div>
+            <div class="font-opt" style="font-family:monospace" onclick="setFont('mono')">Monospace</div>
+          </div>
         </div>
         <div class="ss">
           <div class="sl">Insert</div>
@@ -329,10 +625,69 @@ input[type=file]{display:none}
           <div class="sl">Text Colour</div>
           <div class="swatches" id="sw"></div>
         </div>
+        <div class="ss ai-panel">
+          <div class="sl">🤖 AI Assistant</div>
+          <div id="ai-key-section">
+            <div class="ai-key-wrap">
+              <input class="ai-key-input" id="ai-key-input" type="password" placeholder="Paste Anthropic API key…"/>
+              <button class="ai-key-save" onclick="saveApiKey()">Save</button>
+            </div>
+            <div class="ai-key-note">
+              Your key is stored only on your device.<br>
+              Get a free key at <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a>
+            </div>
+          </div>
+          <div class="ai-btns" id="ai-btns">
+            <button class="ai-btn" onclick="aiAction('improve')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+              Improve Writing
+            </button>
+            <button class="ai-btn" onclick="aiAction('grammar')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+              Fix Grammar
+            </button>
+            <button class="ai-btn" onclick="aiAction('formal')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              Make Formal
+            </button>
+            <button class="ai-btn" onclick="aiAction('expand')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+              Expand Paragraph
+            </button>
+            <button class="ai-btn" onclick="aiAction('summarise')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="16" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+              Summarise
+            </button>
+          </div>
+          <div class="ai-status" id="ai-status"></div>
+          <div class="ai-result-wrap" id="ai-result-wrap">
+            <div class="ai-result-label">AI Suggestion</div>
+            <div class="ai-result" id="ai-result" contenteditable="true"></div>
+            <div class="ai-result-btns">
+              <button class="ai-insert-btn" onclick="aiInsert()">Insert into doc</button>
+              <button class="ai-discard-btn" onclick="aiDiscard()">Discard</button>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- editor col -->
       <div id="ecol">
+        <!-- find & replace bar -->
+        <div id="find-bar">
+          <div class="fb-row">
+            <input id="find-input" placeholder="Find…" oninput="doFind()" onkeydown="findKeyNav(event)"/>
+            <span class="fb-count" id="find-count"></span>
+            <button class="fb-btn" onclick="findNext(-1)" title="Previous">↑</button>
+            <button class="fb-btn" onclick="findNext(1)" title="Next">↓</button>
+            <button class="fb-close" onclick="closeFindBar()">✕</button>
+          </div>
+          <div class="fb-row">
+            <input id="replace-input" placeholder="Replace with…"/>
+            <button class="fb-btn" onclick="doReplace()">Replace</button>
+            <button class="fb-btn green" onclick="doReplaceAll()">All</button>
+          </div>
+        </div>
         <!-- toolbar -->
         <div id="tb">
           <select class="tsel" onchange="fc('formatBlock',this.value);this.value='p'">
@@ -396,12 +751,42 @@ input[type=file]{display:none}
             <div class="pfooter"><span id="d-fn"></span><span id="d-fs"></span></div>
           </div>
         </div>
+        <!-- word count bar -->
+        <div id="wc-bar">
+          <span><b id="wc-words">0</b> words</span>
+          <span><b id="wc-chars">0</b> characters</span>
+          <span><b id="wc-read">0</b> min read</span>
+        </div>
       </div>
     </div>
   </div>
 
 </div>
 <div id="toast"></div>
+
+<!-- ══════════ FOCUS MODE ══════════ -->
+<div id="focus-overlay">
+  <button id="focus-exit" onclick="exitFocus()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:12px;height:12px"><path d="M8 3v3a2 2 0 01-2 2H3m18 0h-3a2 2 0 01-2-2V3m0 18v-3a2 2 0 012-2h3M3 16h3a2 2 0 012 2v3"/></svg>
+    Exit Focus (Esc)
+  </button>
+  <div id="focus-paper"></div>
+</div>
+
+<!-- ══════════ SHARE MODAL ══════════ -->
+<div id="share-modal" onclick="if(event.target===this)closeShare()">
+  <div id="share-box">
+    <h3>Share Assignment</h3>
+    <p>Encodes your assignment directly into the link — no server, no account, no expiry. Anyone with the link can open it in any browser.</p>
+    <input id="share-url" readonly placeholder="Click 'Generate Link' to create a shareable URL…" onclick="this.select()"/>
+    <div id="share-status"></div>
+    <div class="share-btns">
+      <button id="share-gen-btn" class="fb-btn green" style="background:var(--green);color:#fff;border-color:var(--green)" onclick="generateShareLink()">Generate Link</button>
+      <button id="share-copy-btn" class="fb-btn" onclick="copyShareLink()">Copy</button>
+      <button id="share-close-btn" class="fb-btn" onclick="closeShare()">Close</button>
+    </div>
+  </div>
+</div>
 
 <script>
 // ═══════════════════════════════════════
@@ -427,7 +812,10 @@ function capture() {
     inst: g('s-inst'), subj: g('s-subj'), title: g('s-title'),
     name: g('s-name'), roll: g('s-roll'), teacher: g('s-teacher'),
     date: document.getElementById('s-date').value,
+    deadline: document.getElementById('s-deadline').value,
     body: document.getElementById('editor').innerHTML,
+    accent: currentAccent || '#1c4b2e',
+    font: currentFont || 'outfit',
     updated: Date.now()
   };
 }
@@ -437,7 +825,10 @@ function apply(data) {
   sv('s-inst', data.inst); sv('s-subj', data.subj); sv('s-title', data.title);
   sv('s-name', data.name); sv('s-roll', data.roll); sv('s-teacher', data.teacher);
   sv('s-date', data.date);
+  sv('s-deadline', data.deadline || '');
   document.getElementById('editor').innerHTML = data.body || '';
+  if (data.accent) applyAccent(data.accent, false);
+  if (data.font) applyFont(data.font, false);
   upd();
 }
 
@@ -486,10 +877,16 @@ function goToDash() { showDash(); }
 // ═══════════════════════════════════════
 function renderDash() {
   const list = load();
+  const query = (document.getElementById('dash-search')?.value || '').trim().toLowerCase();
+  const filtered = query ? list.filter(a =>
+    (a.title||'').toLowerCase().includes(query) ||
+    (a.subj||'').toLowerCase().includes(query) ||
+    (a.name||'').toLowerCase().includes(query)
+  ) : list;
   const grid = document.getElementById('cards-grid');
   const empty = document.getElementById('empty-state');
   const count = document.getElementById('dash-count');
-  count.textContent = list.length + ' assignment' + (list.length !== 1 ? 's' : '');
+  count.textContent = list.length + ' assignment' + (list.length !== 1 ? 's' : '') + (query && filtered.length !== list.length ? ` · ${filtered.length} match${filtered.length !== 1?'es':''}` : '');
   grid.innerHTML = '';
 
   if (list.length === 0) {
@@ -498,21 +895,27 @@ function renderDash() {
   }
   empty.style.display = 'none';
 
-  // Newest first
-  [...list].reverse().forEach(a => {
+  // Newest first, filtered
+  [...filtered].reverse().forEach(a => {
     const card = document.createElement('div');
     card.className = 'card';
     const title = a.title || 'Untitled';
     const subject = a.subj || '';
     const ago = timeAgo(a.updated);
+    const dlBadge = deadlineBadge(a.deadline);
+    if (a.accent) card.querySelector?.('.card-accent')?.style.setProperty('background', a.accent);
 
     card.innerHTML = `
-      <div class="card-accent"></div>
+      <div class="card-accent" style="${a.accent ? 'background:'+a.accent : ''}"></div>
       <div class="card-title">${esc(title)}</div>
       ${subject ? `<div class="card-subject">${esc(subject)}</div>` : '<div class="card-subject" style="color:var(--faint);font-style:italic">No subject</div>'}
+      ${dlBadge}
       <div class="card-footer">
         <span class="card-time">Edited ${ago}</span>
         <div class="card-actions">
+          <button class="card-btn" title="Duplicate" onclick="dupCard(event,'${a.id}')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          </button>
           <button class="card-btn del" title="Delete" onclick="deleteCard(event,'${a.id}')">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6M9 6V4h6v2"/></svg>
           </button>
@@ -548,11 +951,15 @@ function timeAgo(ts) {
 }
 
 function newAssignment() {
+  if ('Notification' in window && Notification.permission === 'default') {
+    Notification.requestPermission().then(p => { if (p === 'granted') scheduleDeadlineNotifications(); });
+  }
   const id = genId();
   const now = new Date();
   const pad = n => String(n).padStart(2,'0');
   const blank = { id, inst:'', subj:'', title:'', name:'', roll:'', teacher:'',
-    date:`${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`, body:'', updated:Date.now() };
+    date:`${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`,
+    deadline:'', body:'', accent: currentAccent || '#1c4b2e', font: currentFont || 'outfit', updated:Date.now() };
   const list = load();
   list.push(blank);
   save(list);
@@ -566,6 +973,154 @@ function deleteCard(e, id) {
   save(list);
   renderDash();
 }
+
+function dupCard(e, id) {
+  e.stopPropagation();
+  const list = load();
+  const orig = list.find(a => a.id === id);
+  if (!orig) return;
+  const copy = { ...orig, id: genId(), title: (orig.title || 'Untitled') + ' (Copy)', updated: Date.now() };
+  list.push(copy);
+  save(list);
+  renderDash();
+  notify('Assignment duplicated');
+}
+
+// ═══════════════════════════════════════
+//  DARK MODE
+// ═══════════════════════════════════════
+function toggleDark() {
+  document.body.classList.toggle('dark');
+  const isDark = document.body.classList.contains('dark');
+  localStorage.setItem('am_dark', isDark ? '1' : '0');
+  updateDarkIcons(isDark);
+}
+function updateDarkIcons(isDark) {
+  const sunSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
+  const moonSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>`;
+  ['dark-btn-dash','dark-btn-editor'].forEach(id => {
+    const btn = document.getElementById(id);
+    if (btn) btn.innerHTML = isDark ? sunSvg : moonSvg;
+  });
+}
+// Restore dark mode preference
+if (localStorage.getItem('am_dark') === '1') {
+  document.body.classList.add('dark');
+  updateDarkIcons(true);
+}
+
+// ═══════════════════════════════════════
+//  WORD COUNT
+// ═══════════════════════════════════════
+function updateWordCount() {
+  const text = document.getElementById('editor')?.innerText || '';
+  const words = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
+  const chars = text.replace(/\s/g, '').length;
+  const read = Math.max(1, Math.round(words / 200));
+  const wEl = document.getElementById('wc-words');
+  const cEl = document.getElementById('wc-chars');
+  const rEl = document.getElementById('wc-read');
+  if (wEl) wEl.textContent = words.toLocaleString();
+  if (cEl) cEl.textContent = chars.toLocaleString();
+  if (rEl) rEl.textContent = read;
+}
+document.getElementById('editor').addEventListener('input', updateWordCount);
+
+// ═══════════════════════════════════════
+//  FIND & REPLACE
+// ═══════════════════════════════════════
+let _findMatches = [], _findIdx = 0;
+
+function toggleFindBar() {
+  const bar = document.getElementById('find-bar');
+  if (bar.classList.contains('open')) { closeFindBar(); }
+  else { bar.classList.add('open'); document.getElementById('find-input').focus(); }
+}
+function closeFindBar() {
+  document.getElementById('find-bar').classList.remove('open');
+  clearHighlights();
+  _findMatches = []; _findIdx = 0;
+  document.getElementById('find-count').textContent = '';
+}
+function clearHighlights() {
+  const editor = document.getElementById('editor');
+  editor.querySelectorAll('mark.find-hl').forEach(m => {
+    const parent = m.parentNode;
+    parent.replaceChild(document.createTextNode(m.textContent), m);
+    parent.normalize();
+  });
+}
+function doFind() {
+  clearHighlights();
+  _findMatches = []; _findIdx = 0;
+  const term = document.getElementById('find-input').value;
+  if (!term) { document.getElementById('find-count').textContent = ''; return; }
+  const editor = document.getElementById('editor');
+  const walk = (node) => {
+    if (node.nodeType === 3) {
+      const idx = node.textContent.toLowerCase().indexOf(term.toLowerCase());
+      if (idx !== -1) {
+        const before = document.createTextNode(node.textContent.slice(0, idx));
+        const mark = document.createElement('mark');
+        mark.className = 'find-hl';
+        mark.style.cssText = 'background:#fde68a;border-radius:2px;color:inherit';
+        mark.textContent = node.textContent.slice(idx, idx + term.length);
+        const after = document.createTextNode(node.textContent.slice(idx + term.length));
+        node.parentNode.insertBefore(before, node);
+        node.parentNode.insertBefore(mark, node);
+        node.parentNode.insertBefore(after, node);
+        node.parentNode.removeChild(node);
+        _findMatches.push(mark);
+        walk(after);
+      }
+    } else if (node.nodeType === 1 && node.nodeName !== 'MARK') {
+      [...node.childNodes].forEach(walk);
+    }
+  };
+  [...editor.childNodes].forEach(walk);
+  const c = document.getElementById('find-count');
+  c.textContent = _findMatches.length ? `1/${_findMatches.length}` : '0 found';
+  if (_findMatches.length) { _findIdx = 0; highlightCurrent(); }
+}
+function highlightCurrent() {
+  _findMatches.forEach((m,i) => m.style.background = i === _findIdx ? '#f59e0b' : '#fde68a');
+  if (_findMatches[_findIdx]) _findMatches[_findIdx].scrollIntoView({block:'center',behavior:'smooth'});
+  document.getElementById('find-count').textContent = `${_findIdx+1}/${_findMatches.length}`;
+}
+function findNext(dir) {
+  if (!_findMatches.length) return;
+  _findIdx = (_findIdx + dir + _findMatches.length) % _findMatches.length;
+  highlightCurrent();
+}
+function findKeyNav(e) {
+  if (e.key === 'Enter') { e.preventDefault(); findNext(e.shiftKey ? -1 : 1); }
+  if (e.key === 'Escape') closeFindBar();
+}
+function doReplace() {
+  if (!_findMatches.length) return;
+  const rep = document.getElementById('replace-input').value;
+  const m = _findMatches[_findIdx];
+  if (m) { m.replaceWith(document.createTextNode(rep)); _findMatches.splice(_findIdx, 1); }
+  if (_findIdx >= _findMatches.length) _findIdx = 0;
+  if (_findMatches.length) highlightCurrent();
+  else document.getElementById('find-count').textContent = '0 found';
+  saveNow();
+}
+function doReplaceAll() {
+  if (!_findMatches.length) return;
+  const rep = document.getElementById('replace-input').value;
+  const count = _findMatches.length;
+  _findMatches.forEach(m => m.replaceWith(document.createTextNode(rep)));
+  _findMatches = []; _findIdx = 0;
+  document.getElementById('find-count').textContent = '0 found';
+  notify(`Replaced ${count} occurrence${count!==1?'s':''}`);
+  saveNow();
+}
+// Keyboard shortcut Ctrl+H / Cmd+H
+document.addEventListener('keydown', e => {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'h') { e.preventDefault(); toggleFindBar(); }
+  if ((e.ctrlKey || e.metaKey) && e.key === 'f' && document.getElementById('view-editor').classList.contains('active')) { e.preventDefault(); toggleFindBar(); }
+});
 
 // ═══════════════════════════════════════
 //  INIT
@@ -767,6 +1322,394 @@ function notify(msg) {
   const el=document.getElementById('toast'); el.textContent=msg; el.classList.add('show');
   clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove('show'),2600);
 }
+
+// ═══════════════════════════════════════
+//  DEADLINE TRACKER
+// ═══════════════════════════════════════
+function saveDeadline() { saveNow(); renderDash(); }
+
+function deadlineBadge(deadline) {
+  if (!deadline) return '';
+  const now = Date.now();
+  const due = new Date(deadline).getTime();
+  if (isNaN(due)) return '';
+  const diff = due - now;
+  const days = Math.floor(diff / 86400000);
+  const hours = Math.floor(diff / 3600000);
+  if (diff < 0) return `<div class="card-deadline dl-overdue">⚠ Overdue by ${Math.abs(days)||1}d</div>`;
+  if (diff < 3600000) return `<div class="card-deadline dl-today">🔴 Due in &lt;1h</div>`;
+  if (diff < 86400000) return `<div class="card-deadline dl-today">🟠 Due today (${hours}h)</div>`;
+  if (days <= 3) return `<div class="card-deadline dl-soon">🟡 Due in ${days}d</div>`;
+  return `<div class="card-deadline dl-ok">✓ Due in ${days}d</div>`;
+}
+
+function scheduleDeadlineNotifications() {
+  if (!('Notification' in window)) return;
+  const list = load();
+  list.forEach(a => {
+    if (!a.deadline) return;
+    const due = new Date(a.deadline).getTime();
+    const now = Date.now();
+    const oneDayBefore = due - 86400000;
+    const oneHourBefore = due - 3600000;
+    [oneDayBefore, oneHourBefore].forEach(t => {
+      const delay = t - now;
+      if (delay > 0 && delay < 7 * 86400000) {
+        setTimeout(() => {
+          if (Notification.permission === 'granted') {
+            new Notification('Assignment Deadline', {
+              body: `"${a.title || 'Untitled'}" is due ${delay > 3600000 ? 'tomorrow' : 'in 1 hour'}!`,
+              icon: ''
+            });
+          }
+        }, delay);
+      }
+    });
+  });
+}
+
+// Schedule deadline notifications on load
+scheduleDeadlineNotifications();
+
+// ═══════════════════════════════════════
+//  FOCUS MODE
+// ═══════════════════════════════════════
+function enterFocus() {
+  saveNow();
+  const paper = document.getElementById('paper');
+  const fp = document.getElementById('focus-paper');
+  // Clone paper content into focus overlay
+  fp.innerHTML = paper.outerHTML;
+  fp.querySelector('#paper').style.margin = '0 auto';
+  fp.querySelector('#editor')?.removeAttribute('contenteditable');
+  document.getElementById('focus-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function exitFocus() {
+  document.getElementById('focus-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && document.getElementById('focus-overlay').classList.contains('open')) exitFocus();
+});
+
+// ═══════════════════════════════════════
+//  ACCENT COLOUR
+// ═══════════════════════════════════════
+const ACCENTS = ['#1c4b2e','#1a3a6b','#7a1c1c','#7c4d00','#5b4a9e','#2c6e8a','#333333','#c0392b','#d4875a'];
+let currentAccent = localStorage.getItem('am_accent') || '#1c4b2e';
+
+function applyAccent(color, persist=true) {
+  currentAccent = color;
+  document.documentElement.style.setProperty('--green', color);
+  // darken for hover
+  document.documentElement.style.setProperty('--green2', color);
+  if (persist) { localStorage.setItem('am_accent', color); saveNow(); }
+  document.querySelectorAll('.acc-sw').forEach(s => s.classList.toggle('on', s.dataset.color === color));
+}
+
+(function initAccents() {
+  const wrap = document.getElementById('acc-sw');
+  if (!wrap) return;
+  ACCENTS.forEach(c => {
+    const el = document.createElement('div');
+    el.className = 'acc-sw' + (c === currentAccent ? ' on' : '');
+    el.style.background = c;
+    el.dataset.color = c;
+    el.title = c;
+    el.onclick = () => applyAccent(c);
+    wrap.appendChild(el);
+  });
+  applyAccent(currentAccent, false);
+})();
+
+// ═══════════════════════════════════════
+//  FONT PICKER
+// ═══════════════════════════════════════
+const FONTS = {
+  outfit: "'Outfit', sans-serif",
+  lora: "'Lora', serif",
+  mono: "monospace"
+};
+let currentFont = localStorage.getItem('am_font') || 'outfit';
+
+function applyFont(key, persist=true) {
+  currentFont = key;
+  const editor = document.getElementById('editor');
+  if (editor) editor.style.fontFamily = FONTS[key] || FONTS.outfit;
+  if (persist) { localStorage.setItem('am_font', key); saveNow(); }
+  document.querySelectorAll('.font-opt').forEach(el => {
+    el.classList.toggle('on', el.getAttribute('onclick')?.includes(`'${key}'`));
+  });
+}
+applyFont(currentFont, false);
+
+// ═══════════════════════════════════════
+//  TEMPLATES
+// ═══════════════════════════════════════
+const TEMPLATES = {
+  essay: `<h1>Introduction</h1><p>Provide background context and state your thesis here.</p><h1>Argument 1</h1><p>Develop your first main argument with evidence and analysis.</p><h1>Argument 2</h1><p>Develop your second main argument with evidence and analysis.</p><h1>Counterargument</h1><p>Address potential opposing views and refute them.</p><h1>Conclusion</h1><p>Summarise key points and restate your thesis in light of the arguments made.</p><h1>References</h1><p>List all sources cited using the required citation format.</p>`,
+  lab: `<h1>Aim</h1><p>State the purpose and objective of this experiment.</p><h1>Hypothesis</h1><p>Predict the expected outcome.</p><h1>Materials &amp; Apparatus</h1><p>List all materials, chemicals, and equipment used.</p><h1>Method / Procedure</h1><p>Describe the step-by-step process followed.</p><h1>Results</h1><p>Present raw data, observations, and measurements. Include tables or graphs where applicable.</p><h1>Discussion</h1><p>Analyse the results, compare with hypothesis, explain anomalies.</p><h1>Conclusion</h1><p>Summarise findings and their significance.</p>`,
+  research: `<h1>Abstract</h1><p>A concise summary of the research question, methodology, findings, and conclusions (150–250 words).</p><h1>1. Introduction</h1><p>Background to the topic, research question, and significance of the study.</p><h1>2. Literature Review</h1><p>Summary and critical analysis of existing research relevant to the topic.</p><h1>3. Methodology</h1><p>Research design, data collection methods, and ethical considerations.</p><h1>4. Results / Findings</h1><p>Present the data and key findings without interpretation.</p><h1>5. Discussion</h1><p>Interpret findings in relation to the literature and research question.</p><h1>6. Conclusion</h1><p>Key takeaways, limitations, and suggestions for further research.</p><h1>References</h1><p>Full bibliography in the required citation style.</p>`,
+  casestudy: `<h1>Executive Summary</h1><p>Brief overview of the case, key issues, and recommendations.</p><h1>Background</h1><p>Context, history, and relevant information about the subject of the case study.</p><h1>Problem Statement</h1><p>Clearly define the core problem or challenge being analysed.</p><h1>Analysis</h1><p>Apply relevant theories, frameworks, or models to analyse the situation.</p><h1>Alternatives Considered</h1><p>Outline possible solutions with their pros and cons.</p><h1>Recommendations</h1><p>State your recommended course of action with justification.</p><h1>Implementation Plan</h1><p>How the recommendation can be practically executed.</p><h1>References</h1><p>Cite all sources used.</p>`
+};
+
+function applyTemplate(key) {
+  const tpl = TEMPLATES[key];
+  if (!tpl) return;
+  const editor = document.getElementById('editor');
+  if (editor.innerHTML.trim() && !confirm('Replace current content with this template?')) return;
+  editor.innerHTML = tpl;
+  saveNow();
+  notify('Template applied');
+}
+
+// ═══════════════════════════════════════
+//  SHARE VIA URL ENCODING (no API needed)
+// ═══════════════════════════════════════
+function shareAssignment() {
+  document.getElementById('share-modal').classList.add('open');
+  document.getElementById('share-url').value = '';
+  document.getElementById('share-status').textContent = '';
+}
+function closeShare() {
+  document.getElementById('share-modal').classList.remove('open');
+}
+function generateShareLink() {
+  const btn = document.getElementById('share-gen-btn');
+  const status = document.getElementById('share-status');
+  try {
+    saveNow();
+    const list = load();
+    const a = list.find(x => x.id === currentId);
+    if (!a) throw new Error('No assignment open');
+    const payload = {
+      title: a.title || '', inst: a.inst || '', subj: a.subj || '',
+      name: a.name || '', roll: a.roll || '', teacher: a.teacher || '',
+      date: a.date || '', body: a.body || '', accent: a.accent || '#1c4b2e'
+    };
+    // Encode as base64 in the URL hash — no server needed, works forever
+    const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+    const url = location.href.split('?')[0].split('#')[0] + '#view=' + encoded;
+    document.getElementById('share-url').value = url;
+    status.textContent = '✓ Link ready! Works offline, no expiry, no account needed.';
+    status.style.color = 'var(--green)';
+    btn.textContent = 'Regenerate';
+  } catch(e) {
+    status.textContent = '✗ Error: ' + e.message;
+    status.style.color = '#c0392b';
+  }
+}
+function copyShareLink() {
+  const url = document.getElementById('share-url').value;
+  if (!url) { notify('Click "Generate Link" first'); return; }
+  navigator.clipboard.writeText(url).then(() => notify('Link copied!')).catch(() => {
+    document.getElementById('share-url').select();
+    document.execCommand('copy');
+    notify('Link copied!');
+  });
+}
+
+// ═══════════════════════════════════════
+//  SHARED VIEW (read-only from URL hash)
+// ═══════════════════════════════════════
+(function checkSharedView() {
+  const hash = location.hash;
+  if (!hash.startsWith('#view=')) return;
+  try {
+    const encoded = hash.slice(6);
+    const a = JSON.parse(decodeURIComponent(escape(atob(encoded))));
+    // Hide the main app, render read-only view
+    document.getElementById('app').style.display = 'none';
+    document.body.style.background = '#f0ede8';
+    document.body.style.overflow = 'auto';
+    const accent = a.accent || '#1c4b2e';
+    const wrap = document.createElement('div');
+    wrap.style.cssText = 'max-width:800px;margin:0 auto;padding:32px 20px 60px';
+    wrap.innerHTML = `
+      <div style="background:#fff;border-radius:6px;box-shadow:0 8px 32px rgba(0,0,0,.1);padding:56px 64px 52px;font-family:'Outfit',sans-serif">
+        <div style="border-bottom:2px solid ${accent};padding-bottom:16px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:flex-start">
+          <div>
+            <div style="font-family:'Lora',serif;font-size:1.2rem;font-weight:600;color:${accent}">${esc(a.inst||'')}</div>
+            <div style="font-size:.88rem;color:#78716c;margin-top:4px">${esc(a.subj||'')}</div>
+          </div>
+          <div style="text-align:right;font-size:.76rem;color:#78716c">
+            <strong style="display:block;font-size:.83rem;color:#1c1917">${esc(a.date||'')}</strong>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding-bottom:14px;border-bottom:1px solid #ebe7e1;margin-bottom:18px">
+          <div><div style="font-size:.61rem;text-transform:uppercase;color:#b5b0aa">Student</div><div style="font-size:.79rem;font-weight:500">${esc(a.name||'—')}</div></div>
+          <div><div style="font-size:.61rem;text-transform:uppercase;color:#b5b0aa">Roll No.</div><div style="font-size:.79rem;font-weight:500">${esc(a.roll||'—')}</div></div>
+          <div><div style="font-size:.61rem;text-transform:uppercase;color:#b5b0aa">Instructor</div><div style="font-size:.79rem;font-weight:500">${esc(a.teacher||'—')}</div></div>
+        </div>
+        <div style="font-family:'Lora',serif;font-size:1.28rem;font-weight:600;margin-bottom:22px">${esc(a.title||'Untitled')}</div>
+        <div style="font-size:.92rem;line-height:1.85;font-weight:300">${a.body||''}</div>
+        <div style="margin-top:40px;padding-top:12px;border-top:1px solid #ebe7e1;font-size:.7rem;color:#b5b0aa;text-align:center">
+          Shared via Assignment Maker · Read-only view
+        </div>
+      </div>
+    `;
+    document.body.appendChild(wrap);
+    document.title = (a.title || 'Assignment') + ' — Shared';
+  } catch(e) {
+    // Invalid or corrupted hash — just load normally
+  }
+})();
+
+// ═══════════════════════════════════════
+//  AI ASSISTANT
+// ═══════════════════════════════════════
+const AI_KEY_STORE = 'am_ai_key';
+let _aiSelectionHTML = '';
+let _aiSelectionText = '';
+
+function saveApiKey() {
+  const key = document.getElementById('ai-key-input').value.trim();
+  if (!key) { notify('Paste your API key first'); return; }
+  if (!key.startsWith('sk-ant-')) { notify('Looks wrong — Anthropic keys start with sk-ant-'); return; }
+  localStorage.setItem(AI_KEY_STORE, key);
+  document.getElementById('ai-key-input').value = '';
+  renderAiPanel();
+  notify('API key saved ✓');
+}
+
+function getApiKey() { return localStorage.getItem(AI_KEY_STORE) || ''; }
+
+function renderAiPanel() {
+  const has = !!getApiKey();
+  const keySection = document.getElementById('ai-key-section');
+  const btns = document.getElementById('ai-btns');
+  const status = document.getElementById('ai-status');
+  if (has) {
+    keySection.innerHTML = `
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+        <span style="font-size:.72rem;color:var(--green)">✓ API key saved</span>
+        <button onclick="removeApiKey()" style="font-size:.68rem;color:var(--faint);background:none;border:none;cursor:pointer;text-decoration:underline">Remove</button>
+      </div>`;
+    btns.style.display = 'flex';
+    status.textContent = 'Select text in the editor, then click an action.';
+  } else {
+    keySection.innerHTML = `
+      <div class="ai-key-wrap">
+        <input class="ai-key-input" id="ai-key-input" type="password" placeholder="Paste Anthropic API key…"/>
+        <button class="ai-key-save" onclick="saveApiKey()">Save</button>
+      </div>
+      <div class="ai-key-note">
+        Your key stays on your device only.<br>
+        Free key at <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a>
+      </div>`;
+    btns.style.display = 'none';
+    status.textContent = '';
+  }
+}
+
+function removeApiKey() {
+  if (!confirm('Remove saved API key?')) return;
+  localStorage.removeItem(AI_KEY_STORE);
+  renderAiPanel();
+  aiDiscard();
+}
+
+const AI_PROMPTS = {
+  improve: (t) => `Improve the writing quality of the following text. Make it clearer, more engaging, and better structured. Return only the improved text, no explanation:\n\n${t}`,
+  grammar: (t) => `Fix all grammar, spelling, and punctuation errors in the following text. Return only the corrected text, no explanation:\n\n${t}`,
+  formal: (t) => `Rewrite the following text in a formal, academic tone suitable for a university assignment. Return only the rewritten text:\n\n${t}`,
+  expand: (t) => `Expand and elaborate on the following paragraph with more detail, examples, and explanation. Keep the same meaning and academic tone. Return only the expanded text:\n\n${t}`,
+  summarise: (t) => `Summarise the following text concisely in 2-3 sentences. Return only the summary:\n\n${t}`,
+};
+
+async function aiAction(type) {
+  const key = getApiKey();
+  if (!key) { notify('Save your API key first'); return; }
+
+  // Get selected text, or entire editor content
+  const sel = window.getSelection();
+  let text = '';
+  if (sel && sel.toString().trim()) {
+    _aiSelectionText = sel.toString().trim();
+    _aiSelectionHTML = sel.toString().trim(); // store for replacement
+  } else {
+    _aiSelectionText = document.getElementById('editor').innerText.trim();
+    _aiSelectionHTML = '';
+  }
+
+  if (!_aiSelectionText) { notify('Select some text or write something first'); return; }
+
+  const status = document.getElementById('ai-status');
+  const btns = document.querySelectorAll('.ai-btn');
+  btns.forEach(b => b.disabled = true);
+  status.textContent = '⏳ Thinking…';
+  document.getElementById('ai-result-wrap').classList.remove('open');
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': key,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 1024,
+        messages: [{ role: 'user', content: AI_PROMPTS[type](_aiSelectionText) }]
+      })
+    });
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err?.error?.message || `HTTP ${res.status}`);
+    }
+
+    const data = await res.json();
+    const result = data.content?.[0]?.text?.trim() || '';
+    if (!result) throw new Error('Empty response');
+
+    document.getElementById('ai-result').textContent = result;
+    document.getElementById('ai-result-wrap').classList.add('open');
+    status.textContent = '✓ Done — review below, then insert or discard.';
+  } catch(e) {
+    status.textContent = '✗ Error: ' + e.message;
+    if (e.message.includes('401')) {
+      status.textContent = '✗ Invalid API key. Please re-enter it.';
+      localStorage.removeItem(AI_KEY_STORE);
+      renderAiPanel();
+    }
+  }
+
+  btns.forEach(b => b.disabled = false);
+}
+
+function aiInsert() {
+  const result = document.getElementById('ai-result').textContent.trim();
+  if (!result) return;
+  const editor = document.getElementById('editor');
+  editor.focus();
+  const sel = window.getSelection();
+  if (sel && sel.rangeCount > 0 && _aiSelectionHTML) {
+    // Replace the selected range
+    const range = sel.getRangeAt(0);
+    range.deleteContents();
+    range.insertNode(document.createTextNode(result));
+  } else {
+    // Append to end
+    editor.innerHTML += `<p>${result}</p>`;
+  }
+  aiDiscard();
+  saveNow();
+  notify('Inserted ✓');
+}
+
+function aiDiscard() {
+  document.getElementById('ai-result-wrap').classList.remove('open');
+  document.getElementById('ai-result').textContent = '';
+  _aiSelectionHTML = '';
+  _aiSelectionText = '';
+}
+
+// Init AI panel on load
+renderAiPanel();
 </script>
 </body>
 </html>
